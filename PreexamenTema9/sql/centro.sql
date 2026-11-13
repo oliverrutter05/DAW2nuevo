@@ -25,7 +25,7 @@ CREATE TABLE matriculas (
     FOREIGN KEY (codigo) REFERENCES asignaturas(codigo) ON DELETE CASCADE
 );
 
-CREATE USER IF NOT EXISTS 'prexam'@'localhost' IDENTIFIED BY 'CLAVE';
+CREATE USER IF NOT EXISTS 'dwes_app'@'localhost' IDENTIFIED BY 'CLAVE';
 GRANT ALL PRIVILEGES ON centro.* TO 'dwes_app'@'localhost';
 FLUSH PRIVILEGES;
 

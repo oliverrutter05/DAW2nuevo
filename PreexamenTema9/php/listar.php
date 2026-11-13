@@ -1,16 +1,14 @@
 <?php
 
-    mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+    require_once __DIR__ . '/conexion.php';
 
     try {
-        $db = new mysqli('localhost', 'prexam', 'CLAVE', 'centro');
-        $db->set_charset('utf8mb4');
 
-        $sql = "SELECT nombre, edad FROM alumnos ORDER BY alumnos ASC";
+        $sql = "SELECT nombre, edad FROM alumnos ORDER BY nombre ASC";
         $resultado = $db->query($sql);
 
         $totalFilas = $resultado->num_rows;
-        echo "<p>Número total de filas: $resultado</p>";
+        echo "<p>Número total de filas: $totalFilas</p>";
 
         echo "<table border='1'>";
         echo "<tr><th>Nombre</th><th>Edad</th></tr>";
@@ -30,6 +28,8 @@
         $db->close();
     } 
     catch (mysqli_sql_exception $e) {
+        error_log($e->getMessage());
+        http_response_code(500);
         echo "Error al procesar la consulta";
     }
 
