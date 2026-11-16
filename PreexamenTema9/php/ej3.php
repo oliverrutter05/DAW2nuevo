@@ -11,10 +11,14 @@
         echo "<tr><th>Nombre</th><th>Edad</th></tr>";
 
         while ($fila = $resultado->fetch_assoc()) {
+
+            $nombre = htmlspecialchars($fila['nombre'], ENT_QUOTES, 'UTF-8');
+            $edad = (int)$fila['edad'];
+
             echo "<tr>";
 
-            echo "<td>" . htmlspecialchars($fila['nombre'], ENT_QUOTES, 'UTF-8') . "</td>";
-            echo "<td>" . (int)$fila['edad'] . "</td>";
+            echo "<td>" . $nombre . "</td>";
+            echo "<td>" . $edad . "</td>";
             
             echo "</tr>";
         }
