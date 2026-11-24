@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión Club Deportivo - Parte 2 (RegEx)</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    
+  <header>
+
+    <h1>Panel de Gestión - Club Deportivo (Parte 2)</h1>
+    <nav aria-label="Navegación de formularios">
+      <ul>
+        <li><button type="button" aria-controls="seccion-socios" aria-pressed="true">Socios</button></li>
+        <li><button type="button" aria-controls="seccion-servicios" aria-pressed="false">Servicios</button></li>
+        <li><button type="button" aria-controls="seccion-testimonios" aria-pressed="false">Testimonios</button></li>
+        <li><button type="button" aria-controls="seccion-noticias" aria-pressed="false">Noticias</button></li>
+        <li><button type="button" aria-controls="seccion-citas" aria-pressed="false">Citas</button></li>
+        <li><button type="button" aria-controls="seccion-demo-pattern" aria-pressed="false">Demo Pattern</button></li>
+      </ul>
+    </nav>
+
+  </header>
+
+  <main>
+    <!-- 1. FORMULARIO DE SOCIOS -->
+    <section id="seccion-socios">
+        <h2>1. Alta de Socios</h2>
+        <form id="form-socios" novalidate>
+            <fieldset>
+            <legend>Datos personales y de acceso</legend>
+
+            <div class="campo">
+                <label for="socio-nombre">-- Nombre completo --</label>
+                <input type="text" id="socio-nombre" name="nombre" required minlength="4" maxlength="50" aria-describedby="err-socio-nombre">
+                <span id="err-socio-nombre" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="socio-usuario">-- Usuario --</label>
+                <input type="text" id="socio-usuario" name="usuario" required minlength="5" maxlength="20" aria-describedby="err-socio-usuario">
+                <span id="err-socio-usuario" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="socio-correo">-- Correo electrónico --</label>
+                <input type="email" id="socio-correo" name="correo" required aria-describedby="err-socio-correo">
+                <span id="err-socio-correo" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="socio-edad">-- Edad --</label>
+                <input type="number" id="socio-edad" name="edad" required min="18" max="100" step="1" aria-describedby="err-socio-edad">
+                <span id="err-socio-edad" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="socio-telefono">Teléfono (+34 XXX XXX XXX): </label>
+                <input type="tel" id="socio-telefono" name="telefono" placeholder="+34 612 345 678" required aria-describedby="err-socio-telefono">
+                <span id="err-socio-telefono" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="socio-pass">-- Contraseña --</label>
+                <input type="password" id="socio-pass" name="password" required minlength="8" maxlength="16" aria-describedby="err-socio-pass">
+                <span id="err-socio-pass" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="socio-pass-confirm">-- Confirmar contraseña --</label>
+                <input type="password" id="socio-pass-confirm" name="passwordConfirm" required minlength="8" maxlength="16" aria-describedby="err-socio-pass-confirm">
+                <span id="err-socio-pass-confirm" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="socio-foto">--Foto de perfil (JPG, máx. 5 MB) --</label>
+                <input type="file" id="socio-foto" name="foto" accept="image/jpeg" required aria-describedby="err-socio-foto">
+                <span id="err-socio-foto" class="error"></span>
+            </div>
+        </fieldset>
+
+        <fieldset aria-describedby="err-socio-modalidad">
+            <legend>Modalidad de suscripción</legend>
+
+            <div>
+                <input type="radio" id="mod-mensual" name="modalidad" value="mensual" required>
+                <label for="mod-mensual">-- Mensual --</label>
+            </div>
+
+            <div>
+                <input type="radio" id="mod-anual" name="modalidad" value="anual">
+                <label for="mod-anual">-- Anual --</label>
+            </div>
+
+            <span id="err-socio-modalidad" class="error"></span>
+
+            </fieldset>
+
+            <div class="campo">
+                <input type="checkbox" id="socio-condiciones" name="condiciones" required aria-describedby="err-socio-condiciones">
+                <label for="socio-condiciones">-- Acepto las condiciones del club --</label>
+                <span id="err-socio-condiciones" class="error"></span>
+            </div>
+
+            <button type="submit">Registrar socio</button>
+
+            <div id="resumen-socios" class="resumen" aria-live="polite"></div>
+
+        </form>
+    </section>
+
+    <hr hidden>
+
+    <!-- 2. FORMULARIO DE SERVICIOS -->
+    <section id="seccion-servicios" hidden>
+        <h2>2. Gestión de Servicios</h2>
+        <form id="form-servicios" novalidate>
+            <fieldset>
+            <legend>Detalles del servicio</legend>
+
+            <!-- NUEVO CAMPO PARTE 2: Código de servicio -->
+            <div class="campo">
+                <label for="serv-codigo">-- Código de servicio (ej. DEP-007) --</label>
+                <input type="text" id="serv-codigo" name="codigo" required aria-describedby="err-serv-codigo">
+                <span id="err-serv-codigo" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="serv-nombre">--Nombre del servicio --</label>
+                <input type="text" id="serv-nombre" name="nombre" required minlength="3" maxlength="50" aria-describedby="err-serv-nombre">
+                <span id="err-serv-nombre" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="serv-duracion">-- Duración (minutos, múltiplos de 15) --</label>
+                <input type="number" id="serv-duracion" name="duracion" required min="15" step="15" aria-describedby="err-serv-duracion">
+                <span id="err-serv-duracion" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="serv-precio">-- Precio (€) --</label>
+                <input type="number" id="serv-precio" name="precio" required min="0" max="9999.99" step="0.01" aria-describedby="err-serv-precio">
+                <span id="err-serv-precio" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="serv-categoria">-- Categoría --</label>
+                <select id="serv-categoria" name="categoria" required aria-describedby="err-serv-categoria">
+                <option value="">Seleccionar categoría</option>
+                <option value="fitness">Fitness y Musculación</option>
+                <option value="acuaticas">Actividades Acuáticas</option>
+                <option value="raqueta">Deportes de Raqueta</option>
+                <option value="salud">Fisioterapia y Salud</option>
+                </select>
+                <span id="err-serv-categoria" class="error"></span>
+            </div>
+            </fieldset>
+
+            <button type="submit">Guardar servicio</button>
+
+            <div id="resumen-servicios" class="resumen" aria-live="polite"></div>
+
+        </form>
+    </section>
+
+    <hr hidden>
+
+    <!-- 3. FORMULARIO DE TESTIMONIOS -->
+    <section id="seccion-testimonios" hidden>
+        <h2>3. Enviar Testimonio</h2>
+        <form id="form-testimonios" novalidate>
+            <fieldset>
+            <legend>Tu experiencia en el club</legend>
+
+            <div class="campo">
+                <label for="test-autor">-- Autor --</label>
+                <input type="text" id="test-autor" name="autor" required minlength="2" maxlength="50" aria-describedby="err-test-autor">
+                <span id="err-test-autor" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="test-texto">-- Testimonio --</label>
+                <textarea id="test-texto" name="testimonio" rows="5" required minlength="10" maxlength="500" aria-describedby="contador-testimonio err-test-texto"></textarea>
+                <small id="contador-testimonio">0 / 500 caracteres</small>
+                <span id="err-test-texto" class="error"></span>
+            </div>
+
+            <!-- NUEVO BLOQUE PARTE 2: Búsqueda de cifras en el testimonio -->
+            <div class="campo">
+                <button type="button" id="btn-buscar-cifras">Extraer cifras del testimonio</button>
+                <p id="resultado-cifras" aria-live="polite"></p>
+            </div>
+
+            <div class="campo">
+                <input type="checkbox" id="test-publicacion" name="publicacion">
+                <label for="test-publicacion">Autorizo su publicación (opcional)</label>
+            </div>
+            </fieldset>
+
+            <button type="submit">Enviar testimonio</button>
+
+            <div id="resumen-testimonios" class="resumen" aria-live="polite"></div>
+
+        </form>
+    </section>
+
+    <hr hidden>
+
+    <!-- 4. FORMULARIO DE NOTICIAS -->
+    <section id="seccion-noticias" hidden>
+        <h2>4. Publicar Noticia</h2>
+        <form id="form-noticias" novalidate>
+            <fieldset>
+            <legend>Contenido de la noticia</legend>
+
+            <div class="campo">
+                <label for="not-titulo">-- Título --</label>
+                <input type="text" id="not-titulo" name="titulo" required minlength="3" maxlength="100" aria-describedby="err-not-titulo">
+                <span id="err-not-titulo" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="not-contenido">-- Contenido --</label>
+                <textarea id="not-contenido" name="contenido" rows="6" required minlength="20" maxlength="2000" aria-describedby="err-not-contenido"></textarea>
+                <span id="err-not-contenido" class="error"></span>
+            </div>
+
+            <!-- NUEVO CAMPO PARTE 2: Etiquetas opcionales separadas por comas -->
+            <div class="campo">
+                <label for="not-etiquetas">Etiquetas (opcional, separadas por comas)</label>
+                <input type="text" id="not-etiquetas" name="etiquetas" placeholder="club, salud, verano" aria-describedby="err-not-etiquetas">
+                <span id="err-not-etiquetas" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="not-fecha">-- Fecha de publicación (posterior a hoy) --</label>
+                <input type="date" id="not-fecha" name="fechaPublicacion" required aria-describedby="err-not-fecha">
+                <span id="err-not-fecha" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="not-imagen">-- Imagen de portada (JPG, máx. 5 MB) --</label>
+                <input type="file" id="not-imagen" name="imagen" accept="image/jpeg" required aria-describedby="err-not-imagen">
+                <span id="err-not-imagen" class="error"></span>
+            </div>
+            </fieldset>
+
+            <button type="submit">Programar noticia</button>
+
+            <div id="resumen-noticias" class="resumen" aria-live="polite"></div>
+
+        </form>
+    </section>
+
+    <hr hidden>
+
+    <!-- 5. FORMULARIO DE CITAS -->
+    <section id="seccion-citas" hidden>
+        <h2>5. Reserva de Citas</h2>
+        <form id="form-citas" novalidate>
+            <fieldset>
+            <legend>Datos de la reserva</legend>
+
+            <!-- NUEVO CAMPO PARTE 2: Referencia de cita -->
+            <div class="campo">
+                <label for="cita-referencia">-- Referencia de cita (CITA-0001 o RES-0001) --</label>
+                <input type="text" id="cita-referencia" name="referencia" required aria-describedby="err-cita-referencia">
+                <span id="err-cita-referencia" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="cita-socio">-- Socio --</label>
+                <select id="cita-socio" name="socio" required aria-describedby="err-cita-socio">
+                <option value="">Selecciona un socio</option>
+                <option value="SOC-01">Laura Gómez (laura_g)</option>
+                <option value="SOC-02">Carlos Ruiz (cruiz90)</option>
+                <option value="SOC-03">Elena Martín (emartin)</option>
+                </select>
+                <span id="err-cita-socio" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="cita-servicio">-- Servicio --</label>
+                <select id="cita-servicio" name="servicio" required aria-describedby="err-cita-servicio">
+                <option value="">Selecciona un servicio</option>
+                <option value="SERV-01">Entrenamiento Personal (60 min)</option>
+                <option value="SERV-02">Sesión de Fisioterapia (45 min)</option>
+                <option value="SERV-03">Alquiler Pista Pádel (90 min)</option>
+                </select>
+                <span id="err-cita-servicio" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <label for="cita-fecha-hora">-- Fecha y hora de la cita --</label>
+                <input type="datetime-local" id="cita-fecha-hora" name="fechaHora" required aria-describedby="err-cita-fecha-hora">
+                <span id="err-cita-fecha-hora" class="error"></span>
+            </div>
+
+            <div class="campo">
+                <input type="checkbox" id="cita-confirmacion" name="confirmacion" required aria-describedby="err-cita-confirmacion">
+                <label for="cita-confirmacion">-- He revisado los datos de la cita --</label>
+                <span id="err-cita-confirmacion" class="error"></span>
+            </div>
+            </fieldset>
+
+            <button type="submit">Reservar cita</button>
+
+            <div id="resumen-citas" class="resumen" aria-live="polite"></div>
+        </form>
+    </section>
+
+    <hr hidden>
+
+    <!-- 6. DEMOSTRACIÓN INDEPENDIENTE: JAVASCRIPT VS PATTERN -->
+    <section id="seccion-demo-pattern" hidden>
+        <h2>6. Demostración: Validación nativa con <code>pattern</code></h2>
+        <p>Este formulario independiente permite la validación nativa del navegador mediante <code>required</code> y <code>pattern</code> para compararla con el validador JavaScript de Servicios[cite: 8].</p>
+        <form id="form-demo-pattern">
+            <fieldset>
+            <legend>Comprobación de código con atributo <code>pattern</code></legend>
+
+            <div class="campo">
+                <label for="demo-codigo">-- Código de servicio (ej. DEP-007) --</label>
+                <input type="text" id="demo-codigo" name="demoCodigo" required pattern="DEP-[0-9]{3}" title="Debe ser DEP- seguido de exactamente tres cifras (ej. DEP-007)">
+            </div>
+
+            <button type="submit">Probar validación nativa</button>
+
+            </fieldset>
+        </form>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+  <script src="pruebas.js" defer></script>
+</body>
+</html>
