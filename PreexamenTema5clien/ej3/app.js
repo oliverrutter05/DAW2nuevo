@@ -5,7 +5,7 @@ busqueda.addEventListener("input", () => {
 
     let textoBuscado = busqueda.value.trim().toLowerCase();
 
-    lista.forEach(function(li) {
+    lista.forEach((li) => {
 
         let textoLi = li.textContent.toLowerCase();
 
