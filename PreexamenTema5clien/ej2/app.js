@@ -13,12 +13,12 @@ btnMas.addEventListener("click", () => {
 });
 
 btnMenos.addEventListener("click", () => {
-    contador--;
-    total.textContent = contador;
-
     if(contador === 0) {
         btnMenos.disabled = true;
     }
+
+    contador--;
+    total.textContent = contador;
 });
 
 
